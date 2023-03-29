@@ -3,15 +3,31 @@ module.exports = (sequelize, DataTypes) => {
   const Pessoas = sequelize.define(
     "Pessoas",
     {
-      nome: DataTypes.STRING,
+      nome: {
+        type: DataTypes.STRING,
+        validate: {
+          funcaoValidadora: function (dado) {
+            if (dado.length <= 3)
+              throw new Error("Nome inválido, insira seu nome completo");
+          },
+        },
+      },
       ativo: DataTypes.BOOLEAN,
-      email: DataTypes.STRING,
+      email: {
+        type: DataTypes.STRING,
+        validate: {
+          isEmail: {
+            args: true,
+            msg: "dado do tipo email invalido",
+          },
+        },
+      },
       role: DataTypes.STRING,
     },
     {
       paranoid: true,
       defaultScope: {
-        where: { ativo: true }
+        where: { ativo: true },
       },
       scopes: {
         todos: {
@@ -26,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     Pessoas.hasMany(models.Matriculas, {
       foreignKey: "estudante_id",
+      scope: { status: 'confirmado' }, as : 'aulasMatriculadas'
     });
   };
   return Pessoas;

@@ -6,21 +6,16 @@ router
   .get("/pessoas", PessoaController.pegaPessoasAtivas)
   .get("/pessoas/todos", PessoaController.pegaTodasAsPessoas)
   .get("/pessoas/:id", PessoaController.pegaUmaPessoas)
-  .post("/pessoas", PessoaController.criaPessoas)
-  .put("/pessoas/:id", PessoaController.atualizaPessoa)
-  .delete("/pessoas/:id", PessoaController.apagaPessoas)
-  .post("/pessoas/:id/restaura", PessoaController.restauraPessoas)
   .get(
     "/pessoas/:estudanteId/matricula/:matriculaId",
     PessoaController.pegaUmaMatricula
   )
+  .get("/pessoas/:estudanteId/matricula", PessoaController.pegaMatriculas)
+  .post("/pessoas", PessoaController.criaPessoas)
+  .post("/pessoas/:id/restaura", PessoaController.restauraPessoas)
   .post("/pessoas/:estudanteId/matricula", PessoaController.criaMatricula)
-  .put(
-    "/pessoas/:estudanteId/matricula/:matriculaId",
-    PessoaController.atualizaMatricula
-  )
-  .delete(
-    "/pessoas/:estudanteId/matricula/:matriculaId",
-    PessoaController.apagaMatricula
-  );
+  .put("/pessoas/:id", PessoaController.atualizaPessoa)
+  .put("/pessoas/:estudanteId/matricula/:matriculaId", PessoaController.atualizaMatricula)
+  .delete("/pessoas/:id",PessoaController.apagaPessoas)
+  .delete("/pessoas/:estudanteId/matricula/:matriculaId", PessoaController.apagaMatricula)
 module.exports = router;
